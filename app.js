@@ -5,7 +5,7 @@ const mysql = require('mysql');
 const myConnection = require('express-myconnection');
 
 //importing routes
-const misRutas = require("./routers/index");
+const misRutas = require("./routers/productos");
 
 const app = express();
 
@@ -18,19 +18,19 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static (path.join(__dirname, 'public')));
 
 //middlewares
-// app.use(morgan('dev'));
-// app.use(myConnection(mysql, {
-//     host: "localhost",
-//     user: "root",
-//     password : "",
-//     /*port: "3306",*/
-//     database: "projectd"
-// }, 'single'));
+app.use(morgan('dev'));
+app.use(myConnection(mysql, {
+    host: "localhost",
+    user: "root",
+    password : "",
+    /*port: "3306",*/
+    database: "projectd"
+}, 'single'));
 
 //routers
 app.use('/', misRutas);
 
 //starting the server
 app.listen(app.get('port'), () => {    
-    console.log(`Iniciando servidor en puerto 3000`);
+    /*console.log(`Iniciando servidor en puerto 3000`);*/
 });

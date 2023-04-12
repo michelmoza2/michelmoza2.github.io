@@ -10,7 +10,7 @@ controller.list = (req, res) => {
             }
             else{
                 console.log(productos);
-                res.render('index', {
+                res.render('productos', {
                     data: productos
                 });
             }
