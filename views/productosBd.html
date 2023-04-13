@@ -28,7 +28,7 @@
         </tbody>
     </table>
     <br>
-    <form class="form-inline" id="formulario-productosBd">
+    <form class="form-inline" id="formulario-productosBd" method="post">
         <div class="form-group row">
             <div class="col-sm-2">
                 <input type="number" id="id" name="id" placeholder="Id"  class="form-control rounded-0">
@@ -59,104 +59,102 @@
     <button type="button" class="btn btn-danger" id="borrar">Borrar</button>
     <button type="button" class="btn btn-warning" id="modificar" >Modificar</button>
 </div>
-<script>
-$(document).ready(function() {
-
-// Función para cargar la tabla de alumnos
-function cargarTablaproductosBd() {
-$.get('/mostrarTodos', function(productosBd) {
-var tbody = $('#tabla-productosBd tbody');
-tbody.empty();
-for (var i = 0; i < productosBd.length; i++) {
-  var productosBd = productosBd[i];
-  var tr = $('<tr>').addClass('fila-productosBd').appendTo(tbody);
-    $('<td>').text(productosBd.id).appendTo(tr);
-    $('<td>').text(productosBd.descripcion).appendTo(tr);
-    $('<td>').text(productosBd.nombre).appendTo(tr);
-    $('<td>').text(productosBd.precio).appendTo(tr);
-    $('<td>').text(productosBd.estado).appendTo(tr);
-    $('<td>').text(productosBd.imagen).appendTo(tr);
-}
-});
-}
-
-// Carga la tabla de alumnos al cargar la página
-cargarTablaproductosBd();
-
-// Función para buscar un alumno
-$('#buscar').click(function() {
-var id = $('#id').val();
-$.get(`/buscarId/${id}`, function(productosBd) {
-$('#id').val(productosBd.id);
-$('#nombre').val(productosBd.descripcion);
-$('#nombre').val(productosBd.nombre);
-$('#precio').val(productosBd.precio);
-$('#estado').val(productosBd.estado);
-$('#imagen').val(productosBd.imagen);
-}).fail(function(error) {
-alert(error.responseJSON.message);
-});
-});
-
-// Función para agregar un alumno
-$('#agregar').click(function() {
-var productosBd = {
-id: $('#id').val(),
-descripcion: $('#descripcion').val(),
-nombre: $('#nombre').val(),
-precio: $('#precio').val(),
-estado: $('#estado').val(),
-imagen: $('#imagen').val(),
-};
-$.post('/insertar', productosBd, function() {
-cargarTablaproductosBd();
-alert('producto agregado correctamente');
-}).fail(function(error) {
-alert('Error');
-});
-});
-
-// Función para borrar un alumno
-$('#borrar').click(function() {
-var id = $('#id').val();
-$.ajax({
-url: `/borrar/${id}`,
-type: 'DELETE',
-success: function() {
-    cargarTablaproductosBd();
-  alert('Producto borrado correctamente');
-},
-error: function(error) {
-  alert(error.responseJSON.message);
-}
-});
-});
-
-// Función para modificar un alumno
-$('#modificar').click(function() {
-var id = $('#id').val();
-var productosBd = {
-id: $('#id').val(),
-descripcion: $('#descripcion').val(),
-nombre: $('#nombre').val(),
-precio: $('#precio').val(),
-estado: $('#estado').val(),
-imagen: $('#imagen').val(),
-};
-$.ajax({
-url: `/actualizar/${id}`,
-type: 'PUT',
-data: productosBd,
-success: function() {
-  cargarTablaproductosBd();
-  alert('Producto actualizado correctamente');
-},
-error: function(error) {
-  alert('Error al actualizar');
-}
-});
-});
-});
-</script>
 </body>
 </html>
+<script>
+    $(document).ready(function() {
+    
+    // Función para cargar la tabla de alumnos
+    function cargarTablaproductosBd() {
+    $.get('/mostrarTodos', function(productos) {
+    var tbody = $('#tabla-productosBd tbody');
+    tbody.empty();
+    for (var i = 0; i < productos.length; i++) {
+      var producto = productos[i];
+      var tr = $('<tr>').addClass('fila-productosBd').appendTo(tbody);
+        $('<td>').text(producto.id).appendTo(tr);
+        $('<td>').text(producto.descripcion).appendTo(tr);
+        $('<td>').text(producto.nombre).appendTo(tr);
+        $('<td>').text(producto.precio).appendTo(tr);
+        $('<td>').text(producto.estado).appendTo(tr);
+        $('<td>').text(producto.imagen).appendTo(tr);
+    }
+    });
+    }
+    
+    // Carga la tabla de alumnos al cargar la página
+    cargarTablaproductosBd();
+    
+    // Función para buscar un alumno
+    $('#buscar').click(function() {
+    var id = $('#id').val();
+    $.get(`/buscarId/${id}`, function(producto) {
+    $('#descrpcion').val(producto.descripcion);
+    $('#nombre').val(producto.nombre);
+    $('#precio').val(producto.precio);
+    $('#estado').val(producto.estado);
+    $('#imagen').val(producto.imagen);
+    }).fail(function(error) {
+    alert('error al buscar producto');
+    });
+    });
+    
+    // Función para agregar un producto
+    $('#agregar').click(function() {
+      var producto = {
+        id: $('#id').val(),
+        descripcion: $('#descripcion').val(),
+        nombre: $('#nombre').val(),
+        precio: $('#precio').val(),
+        estado: $('#estado').val(),
+        imagen: $('#imagen').val(),
+      };
+      $.post('/insertar', producto, function() {
+        cargarTablaproductosBd();
+        alert('Producto agregado correctamente');
+      }).fail(function(error) {
+        alert('Error al agregar producto');
+      });
+    });
+    
+    // Función para borrar un alumno
+    $('#borrar').click(function() {
+    var id = $('#id').val();
+    $.ajax({
+    url: `/borrar/${id}`,
+    type: 'DELETE',
+    success: function() {
+        cargarTablaproductosBd();
+      alert('Producto borrado correctamente');
+    },
+    error: function(error) {
+      alert(error.responseJSON.message);
+    }
+    });
+    });
+    
+    // Función para modificar un alumno
+    $('#modificar').click(function() {
+    var id = $('#id').val();
+    var producto = {
+    descripcion: $('#descripcion').val(),
+    nombre: $('#nombre').val(),
+    precio: $('#precio').val(),
+    estado: $('#estado').val(),
+    imagen: $('#imagen').val(),
+    };
+    $.ajax({
+    url: `/actualizar/${id}`,
+    type: 'PUT',
+    data: producto,
+    success: function() {
+      cargarTablaproductosBd();
+      alert('Producto actualizado correctamente');
+    },
+    error: function(error) {
+      alert('Error al actualizar');
+    }
+    });
+    });
+    });
+    </script>

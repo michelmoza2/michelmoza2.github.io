@@ -6,26 +6,52 @@ const router = express.Router();
 router.use(bodyParser.json());
 // const productosController = require('../controllers/productosControllers.js');
 
+module.exports = router;
+
 //router.get('/', productosController.list);
-productos ={
+producto ={
 
 }
 
-router.get("/", (req,res)=>{
-  res.render('index');
+router.post("/insertar", async (req, res) => {
+  console.log('Petición recibida en la ruta /insertar');
+  producto = {
+    id: req.body.id,
+    descripcion: req.body.descripcion,
+    nombre: req.body.nombre,
+    precio: req.body.precio,
+    estado: req.body.estado,
+    imagen: req.body.imagen,
+  };
+  console.log(producto);
+  try {
+    const resultado = await productosDb.insertar(producto);
+    res.json(resultado);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error al insertar el producto en la base de datos.");
+  }
 });
 
-router.get('/nosotros', (req, res) => {
-  res.sendFile(path.join(__dirname, '../views/nosotros.html'));
-});  
-
-router.get('/contacto', (req, res) => {
-  res.sendFile(path.join(__dirname, '../views/contacto.html'));
-});
-
+  router.get("/", (req,res)=>{
+    res.render('index');
+  });
   
+  router.get('/nosotros', (req, res) => {
+    res.sendFile(path.join(__dirname, '../views/nosotros.html'));
+  });  
+  
+  router.get('/contacto', (req, res) => {
+    res.sendFile(path.join(__dirname, '../views/contacto.html'));
+  });
+  
+    
   router.get('/admin', (req, res) => {
     res.sendFile(path.join(__dirname, '../views/admin.html'));
+  });
+
+  router.get('/productos', (req, res) => {
+    res.sendFile(path.join(__dirname, '../views/productos.html'));
   });
   
   router.post('/admin', (req, res) => {
@@ -43,25 +69,6 @@ router.get('/contacto', (req, res) => {
   router.get('/productosBd', (req, res) => {
     res.sendFile(path.join(__dirname, '../views/productosBd.html')); 
   });
-  
-
-
-router.post("/insertar", async (req, res) => {
-    console.log('Petición recibida en la ruta /insertar');
-    productos = {
-        id: req.body.id,
-        descripcion: req.body.descripcion,
-        nombre: req.body.nombre,
-        precio: req.body.precio,
-        estado: req.body.estado,
-        imagen: req.body.imagen,
-    };
-    
-    console.log(productos);
-     const resultado = await productosDb.insertar(productos);
-    res.json(resultado);
-  });
-  
 
 router.get("/mostrarTodos", async (req, res) => {
   const resultado = await productosDb.mostrarTodos();
@@ -85,19 +92,19 @@ router.delete('/borrar/:id', (req, res) => {
 router.get('/buscarId/:id', function(req, res) {
   var id = req.params.id;
   productosDb.buscarId(id)
-    .then((productos) => {
-      res.json(productos);
+    .then((producto) => {
+      res.json(producto);
     })
     .catch((error) => {
       console.error('error al buscar producto:', error);
-      res.status(500).send('error al buscar producto');
+      alert('error al buscar producto');
     });
 });
 
 router.put('/actualizar/:id', function(req, res) {
   var id = req.params.id;
-  var productos= req.body;
-  productosDb.actualizar(id, productos)
+  var producto= req.body;
+  productosDb.actualizar(id, producto)
     .then((result) => {
       res.status(200).json({ message: result });
     })
@@ -106,4 +113,8 @@ router.put('/actualizar/:id', function(req, res) {
       res.status(500).json({ message: 'Error al actualizar el producto' });
     });
 });
-  module.exports = router;
+
+router.get("/mostrarProductos", async (req, res) => {
+  const resultado = await productosDb.mostrarProductos();
+  res.send(resultado);
+});
