@@ -5,17 +5,17 @@ const mysql = require('mysql');
 const myConnection = require('express-myconnection');
 
 //importing routes
-const misRutas = require("./routers/productos");
+const misRutas = require("./routers/index");
 
 const app = express();
 
 //settings
 app.set('port', process.env.PORT || 3000);
-app.set("view engine", "ejs"); 
 app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
 //static files
-app.use(express.static (path.join(__dirname, 'public')));
+app.use(express.static(__dirname + '/public')); 
 
 //middlewares
 app.use(morgan('dev'));
