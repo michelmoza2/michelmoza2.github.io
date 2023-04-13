@@ -5,9 +5,89 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://bootswatch.com/5/minty/bootstrap.css">
-    <title>Contacto</title>
+    <title>DermaSkin</title>
 </head>
 <body>
-<h1>Contacto</h1>
-</body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">DermaSkin</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor01">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../nosotros.html">Sobre nosotros</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../contacto.html">Contacto</a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Productos</a>
+            <div class="dropdown-menu" style="">
+              <a class="dropdown-item" href="#">Limpiadores faciales</a>
+              <a class="dropdown-item" href="#">Tonicos y sueros</a>
+              <a class="dropdown-item" href="#">Hidratantes</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Protección solar</a>
+            </div>
+          </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+    <div class="container">
+    <br>
+      <h1 class="text-primary">Contáctanos</h1>
+      <form>
+        <div class="mb-3">
+          <label for="nombre" class="form-label">Nombre</label>
+          <input type="text" class="form-control" id="nombre" required>
+        </div>
+        <div class="mb-3">
+          <label for="correo" class="form-label">Correo electrónico</label>
+          <input type="email" class="form-control" id="correo" required>
+        </div>
+        <div class="mb-3">
+          <label for="mensaje" class="form-label">Mensaje</label>
+          <textarea class="form-control" id="mensaje" rows="5" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar</button>
+      </form>
+      <br>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <footer class="bg-primary text-light">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-4">
+              <h4>DermaSkin</h4>
+              <ul class="list-unstyled">
+                <li><a href="#" class="text-light">Inicio</a></li>
+                <li><a href="#" class="text-light">Sobre nosotros</a></li>
+                <li><a href="#" class="text-light">Contacto</a></li>
+              </ul>
+            </div>
+            <div class="col-md-4">
+              <h4>Síguenos</h4>
+              <ul class="list-unstyled">
+                <li><a href="#" class="text-light">Facebook</a></li>
+                <li><a href="#" class="text-light" >Twitter</a></li>
+                <li><a href="#" class="text-light">Instagram</a></li>
+              </ul>
+            </div>
+            <div class="col-md-4">
+              <h4>Datos de contacto</h4>
+              <p><i class="fa fa-map-marker"></i> 123 Mazatlán, Sinalo</p>
+              <p><i class="fa fa-phone"></i> (123) 456-7890</p>
+              <p><i class="fa fa-envelope"></i> dermaskin@gmail.com</p>
+            </div>
+          </div>
+        </div>
+      </footer>
+  </body>
 </html>

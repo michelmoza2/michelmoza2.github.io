@@ -12,8 +12,17 @@ productos ={
 }
 
 router.get("/", (req,res)=>{
-    res.render('index.ejs');
-  });
+  res.render('index');
+});
+
+router.get('/nosotros', (req, res) => {
+  res.sendFile(path.join(__dirname, '../views/nosotros.html'));
+});  
+
+router.get('/contacto', (req, res) => {
+  res.sendFile(path.join(__dirname, '../views/contacto.html'));
+});
+
   
   router.get('/admin', (req, res) => {
     res.sendFile(path.join(__dirname, '../views/admin.html'));
