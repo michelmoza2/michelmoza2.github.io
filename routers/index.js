@@ -8,6 +8,18 @@ router.use(bodyParser.json());
 
 module.exports = router;
 
+router.get("/index.html", (req,res)=>{
+  res.render('index.html');
+});
+
+router.get('/nosotros.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '../views/nosotros.html'));
+});
+
+router.get('/contacto.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '../views/contacto.html'));
+});
+
 //router.get('/', productosController.list);
 producto ={
 
@@ -33,19 +45,6 @@ router.post("/insertar", async (req, res) => {
   }
 });
 
-  router.get("/", (req,res)=>{
-    res.render('index');
-  });
-  
-  router.get('/nosotros', (req, res) => {
-    res.sendFile(path.join(__dirname, '../views/nosotros.html'));
-  });  
-  
-  router.get('/contacto', (req, res) => {
-    res.sendFile(path.join(__dirname, '../views/contacto.html'));
-  });
-  
-    
   router.get('/admin', (req, res) => {
     res.sendFile(path.join(__dirname, '../views/admin.html'));
   });
