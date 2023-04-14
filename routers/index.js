@@ -1,15 +1,40 @@
-const productosDb = require("../models/productos.js");
-const express = require('express');
-const bodyParser = require('body-parser');
-const path = require('path');
+const productosBd = require("../models/productos.js");
+const express = require("express");
+const bodyParser = require("body-parser");
 const router = express.Router();
-router.use(bodyParser.json());
-// const productosController = require('../controllers/productosControllers.js');
+const path = require('path');
+
+
 
 module.exports = router;
 
-router.get("/index.html", (req,res)=>{
-  res.render('index.html');
+//declarar array de objeto
+producto ={
+
+}
+
+router.get('/admin', (req, res) => {
+  res.sendFile(path.join(__dirname, '../views/admin.html'));
+});
+
+router.get('/productos', (req, res) => {
+  res.sendFile(path.join(__dirname, '../views/productos.html'));
+});
+
+router.post('/admin', (req, res) => {
+  const { usuario, contraseña } = req.body;
+  
+  if (usuario === 'admin' && contraseña === 'admin') {
+    // Credenciales válidas, redirige a la página de inicio.
+    res.redirect('../productosBd');
+  } else {
+    // Credenciales inválidas, vuelve a la página de inicio de sesión.
+    res.redirect('/admin');
+  }
+});
+
+router.get('/productosBd', (req, res) => {
+  res.sendFile(path.join(__dirname, '../views/productosBd.html')); 
 });
 
 router.get('/nosotros.html', (req, res) => {
@@ -20,67 +45,43 @@ router.get('/contacto.html', (req, res) => {
   res.sendFile(path.join(__dirname, '../views/contacto.html'));
 });
 
-//router.get('/', productosController.list);
-producto ={
-
-}
-
-router.post("/insertar", async (req, res) => {
-  console.log('Petición recibida en la ruta /insertar');
-  producto = {
-    id: req.body.id,
-    descripcion: req.body.descripcion,
-    nombre: req.body.nombre,
-    precio: req.body.precio,
-    estado: req.body.estado,
-    imagen: req.body.imagen,
-  };
-  console.log(producto);
-  try {
-    const resultado = await productosDb.insertar(producto);
-    res.json(resultado);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Error al insertar el producto en la base de datos.");
-  }
+router.get('/productos.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '../views/productos.html'));
 });
 
-  router.get('/admin', (req, res) => {
-    res.sendFile(path.join(__dirname, '../views/admin.html'));
-  });
-
-  router.get('/productos', (req, res) => {
-    res.sendFile(path.join(__dirname, '../views/productos.html'));
+router.post("/insertar", async (req, res) => {
+    console.log('Petición recibida en la ruta /insertar');
+    producto = {
+      id: req.body.id,
+      descripcion: req.body.descripcion,
+      nombre: req.body.nombre,
+      precio: req.body.precio,
+      estado: req.body.estado,
+      imagen: req.body.imagen,
+    };
+    
+    console.log(producto);
+     const resultado = await productosBd.insertar(producto);
+    res.json(resultado);
   });
   
-  router.post('/admin', (req, res) => {
-    const { usuario, contraseña } = req.body;
-    
-    if (usuario === 'admin' && contraseña === 'admin') {
-      // Credenciales válidas, redirige a la página de inicio.
-      res.redirect('/productosBd');
-    } else {
-      // Credenciales inválidas, vuelve a la página de inicio de sesión.
-      res.redirect('/admin');
-    }
-  });
 
-  router.get('/productosBd', (req, res) => {
-    res.sendFile(path.join(__dirname, '../views/productosBd.html')); 
-  });
+router.get("/", (req,res)=>{
+  res.render('index.html');
+})
 
 router.get("/mostrarTodos", async (req, res) => {
-  const resultado = await productosDb.mostrarTodos();
+  const resultado = await productosBd.mostrarTodos();
   res.send(resultado);
 });
 
 router.delete('/borrar/:id', (req, res) => {
   const id = req.params.id;
-  productosDb
+  productosBd
     .borrar(id)
     .then((data) => {
       if (data.deletedCount === 0) {
-        res.status(404).send('Id inexistente');
+        res.status(404).send('No se encontró el id');
       } else {
         res.json(data);
       }
@@ -90,7 +91,7 @@ router.delete('/borrar/:id', (req, res) => {
 
 router.get('/buscarId/:id', function(req, res) {
   var id = req.params.id;
-  productosDb.buscarId(id)
+  productosBd.buscarId(id)
     .then((producto) => {
       res.json(producto);
     })
@@ -103,17 +104,13 @@ router.get('/buscarId/:id', function(req, res) {
 router.put('/actualizar/:id', function(req, res) {
   var id = req.params.id;
   var producto= req.body;
-  productosDb.actualizar(id, producto)
+  productosBd.actualizar(id, producto)
     .then((result) => {
       res.status(200).json({ message: result });
     })
     .catch((err) => {
       console.log(err);
-      res.status(500).json({ message: 'Error al actualizar el producto' });
+      res.status(500).json({ message: 'Error al actualizar el alumno' });
     });
 });
 
-router.get("/mostrarProductos", async (req, res) => {
-  const resultado = await productosDb.mostrarProductos();
-  res.send(resultado);
-});
