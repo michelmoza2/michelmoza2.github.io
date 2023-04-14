@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://bootswatch.com/5/minty/bootstrap.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>ProductosBd</title>
+</head>
+<body>
+	<div class="container">
+		<table class="table table-striped table-hover" id="tabla-producto">
+			<thead>
+				<tr class="fila-producto">
+                    <th>Id</th>
+					<th>Descripción</th>
+					<th>Nombre</th>
+					<th>Precio</th>
+					<th>Estado</th>
+					<th>Imagen</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+		<br>           
+		<br>
+      <button type="submit" class="btn btn-primary " id="Comprar">Comprar</button>
+	</div>
+</body>
+<script>
+    $(document).ready(function() {
+
+// Función para cargar la tabla de alumnos
+function cargarTablaProductos() {
+  $.get('/mostrarTodos', function(productos) {
+    var tbody = $('#tabla-producto tbody');
+    tbody.empty();
+    for (var i = 0; i < productos.length; i++) {
+      var producto = productos[i];
+      var tr = $('<tr>').addClass('fila-producto').appendTo(tbody);
+        $('<td>').text(producto.id).appendTo(tr);
+        $('<td>').text(producto.descripcion).appendTo(tr);
+        $('<td>').text(producto.nombre).appendTo(tr);
+        $('<td>').text(producto.precio).appendTo(tr);
+        $('<td>').text(producto.estado).appendTo(tr);
+        $('<td>').text(producto.imagen).appendTo(tr);
+    }
+  });
+}
+
+// Carga la tabla de alumnos al cargar la página
+cargarTablaProductos();
+
+});
+</script>
