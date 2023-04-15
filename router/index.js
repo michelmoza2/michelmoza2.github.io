@@ -45,74 +45,74 @@ router.get('/contacto.html', (req, res) => {
   res.sendFile(path.join(__dirname, '../views/contacto.html'));
 });
 
-
-
-router.post("/insertar", async (req, res) => {
-    console.log('Petición recibida en la ruta /insertar');
-    producto = {
-      id: req.body.id,
-      descripcion: req.body.descripcion,
-      nombre: req.body.nombre,
-      precio: req.body.precio,
-      estado: req.body.estado,
-      imagen: req.body.imagen,
-    };
-    
-    console.log(producto);
-     const resultado = await productosBd.insertar(producto);
-    res.json(resultado);
-  });
-  
-
 router.get("/", (req,res)=>{
   res.render('index.html');
 })
 
+router.post("/insertar", async (req, res) => {
+  console.log('Petición recibida en la ruta /insertar');
+  producto = {
+    id: req.body.id,
+    descripcion: req.body.descripcion,
+    nombre: req.body.nombre,
+    precio: req.body.precio,
+    estado: req.body.estado,
+    imagen: req.body.imagen,
+  };
+  
+  console.log(producto);
+   const resultado = await productosBd.insertar(producto);
+  res.json(resultado);
+});
+
+
+router.get("/", (req,res)=>{
+res.render('index.html');
+})
+
 router.get("/mostrarTodos", async (req, res) => {
-  const resultado = await productosBd.mostrarTodos();
-  res.send(resultado);
+const resultado = await productosBd.mostrarTodos();
+res.send(resultado);
 });
 
 router.delete('/borrar/:id', (req, res) => {
-  const id = req.params.id;
-  productosBd
-    .borrar(id)
-    .then((data) => {
-      if (data.deletedCount === 0) {
-        res.status(404).send('No se encontró el id');
-      } else {
-        res.json(data);
-      }
-    })
-    .catch((err) => res.status(500).send(err.message));
+const id = req.params.id;
+productosBd
+  .borrar(id)
+  .then((data) => {
+    if (data.deletedCount === 0) {
+      res.status(404).send('No se encontró el id');
+    } else {
+      res.json(data);
+    }
+  })
+  .catch((err) => res.status(500).send(err.message));
 });
 
 router.get('/buscarId/:id', function(req, res) {
-  var id = req.params.id;
-  productosBd.buscarId(id)
-    .then((producto) => {
-      res.json(producto);
-    })
-    .catch((error) => {
-      console.error('error al buscar producto:', error);
-      alert('error al buscar producto');
-    });
+var id = req.params.id;
+productosBd.buscarId(id)
+  .then((producto) => {
+    res.json(producto);
+  })
+  .catch((error) => {
+    console.error('error al buscar producto:', error);
+    alert('error al buscar producto');
+  });
 });
 
 router.put('/actualizar/:id', function(req, res) {
-  var id = req.params.id;
-  var producto= req.body;
-  productosBd.actualizar(id, producto)
-    .then((result) => {
-      res.status(200).json({ message: result });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json({ message: 'Error al actualizar el alumno' });
-    });
+var id = req.params.id;
+var producto= req.body;
+productosBd.actualizar(id, producto)
+  .then((result) => {
+    res.status(200).json({ message: result });
+  })
+  .catch((err) => {
+    console.log(err);
+    res.status(500).json({ message: 'Error al actualizar el alumno' });
+  });
 });
-
-
 
 
 

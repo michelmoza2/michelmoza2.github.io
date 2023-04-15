@@ -1,34 +1,41 @@
 const http = require("http");
-const express = require("express");
+const express = require('express');
+const morgan = require('morgan');
+const path = require('path');
+const mysql = require('mysql');
+const myConnection = require('express-myconnection');
 const bodyparser = require("body-parser");
 
-const misRutas = require("./router/index");
-const path = require("./node_modules/path");
-//app.engine("html", require("ejs").renderFile);
-//app.use(express.static('/public'));
 
+//importing routes
+const misRutas = require("./routers/index");
 
-
-
-const app = express(); //OBJETO PRINCIPAL DE LA APLICACION
+const app = express();
+//settings
+app.set('port', process.env.PORT || 3000);
 app.set("view engine", "ejs");
+app.set('views', path.join(__dirname, 'views'));
+app.engine("html", require("ejs").renderFile);
+//static files
 app.use(express.static(__dirname + '/public')); 
+app.use(express.static('/public'));
 app.use(bodyparser.urlencoded({extended:true}));
 app.use(express.json())
 
-//cambiar extensiones a ejs a html
-app.engine("html", require("ejs").renderFile);
+//middlewares
+app.use(morgan('dev'));
+app.use(myConnection(mysql, {
+    host: "localhost",
+    user: "root",
+    password : "",
+    /*port: "3306",*/
+    database: "projectd"
+}, 'single'));
 
-app.use(misRutas);
+//routers
+app.use('/', misRutas);
 
-
-// la pagina del error va al final de los get / post 
-app.use((req,res,next)=>{
-res.status(404).sendFile(__dirname + '/public/error.html')
-})
-
-
-const puerto = 3000;  
-app.listen(puerto, ()=>{    //La aplicacion va a escuchar por el puerto 3000
-    console.log("Iniciando puerto");
+//starting the server
+app.listen(app.get('port'), () => {    
+    /*console.log(`Iniciando servidor en puerto 3000`);*/
 });
