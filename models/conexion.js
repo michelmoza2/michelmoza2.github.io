@@ -5,6 +5,13 @@ var sqlConnection = mysql.createConnection({
     database:"projectd"
 });
 
+// var sqlConnection = mysql.createConnection({
+//     host: "localhost",
+//     user:"michelle",
+//     password: 'Michellemoza2002<3',
+//     database:"sistema"
+// });
+
 sqlConnection.connect(function (err){
     if(err){
         console.log("Error al intentar conectarse" + err);
@@ -14,5 +21,7 @@ sqlConnection.connect(function (err){
 });
 
 
+
+module.exports = sqlConnection;
 
 module.exports = sqlConnection;

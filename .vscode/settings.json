@@ -8,10 +8,16 @@
             "server": "localhost",
             "port": 3306,
             "driver": "MySQL",
+<<<<<<< HEAD
+            "name": "mysql",
+            "database": "sistema",
+            "username": "root"
+=======
             "name": "mysql2",
             "database": "projectd",
             "username": "root",
             "password": ""
+>>>>>>> origin/Desarrollo
         }
     ]
 }

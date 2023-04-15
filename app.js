@@ -1,8 +1,11 @@
+const http = require("http");
 const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
 const mysql = require('mysql');
 const myConnection = require('express-myconnection');
+const bodyparser = require("body-parser");
+
 
 //importing routes
 const misRutas = require("./routers/index");
@@ -16,6 +19,8 @@ app.engine("html", require("ejs").renderFile);
 //static files
 app.use(express.static(__dirname + '/public')); 
 app.use(express.static('/public'));
+app.use(bodyparser.urlencoded({extended:true}));
+app.use(express.json())
 
 //middlewares
 app.use(morgan('dev'));

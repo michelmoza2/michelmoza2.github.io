@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://bootswatch.com/5/minty/bootstrap.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <title>Panel Administrador</title>
   <style>
     /* Estilos para el contenedor principal */
@@ -19,7 +22,7 @@
       background-color: white;
       border-radius: 8px;
       padding: 20px;
-      height: 55%;
+      height: 66%;
       box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
       text-align: center;
     }
@@ -49,8 +52,9 @@
 </head>
 
 <body>
-  <form>
-    <h1>Administrador</h1>
+  <form method="post">
+    <h1 style="margin: 5px;">Administrador</h1>
+    <br>
     <label for="usuario">Usuario:</label>
     <input type="text" id="usuario" name="usuario">
 
