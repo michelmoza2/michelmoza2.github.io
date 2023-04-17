@@ -1,0 +1,474 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://bootswatch.com/5/minty/bootstrap.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+    <title>Productos | DermaSkin</title>
+
+    <style>
+      .ocultar{
+        display: none;
+      }
+    </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+      <a class="navbar-brand">DermaSkin</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/nosotros.html">Sobre nosotros</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/contacto.html">Contacto</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/productos.html">Productos</a>
+          </li>
+        </ul>
+      </div>
+        <div id="divUsuarios">
+          <div id="SinUsuario">
+              <button type="button" class="btn btn-outline-dark">
+                  <a class="nav-link" href="/signup">Registrarse</a>
+              </button>
+              <button type="button" class="btn btn-dark">
+                  <a class="nav-link" href="/login">Iniciar Sesión</a>
+              </button>
+          </div>
+          <div id="ConUsuario" class="ocultar">
+            <div>
+              <b>Usuario: <span id="mostrarNombreUsuario"></span></b>
+              <br>
+            </div>
+            <button type="button" class="btn btn-dark" onclick="cerrarSesión()">Cerra Sesión</button>
+          </div>
+      </div>
+    </div>
+</nav>
+    <br>
+    <div class="container" style="padding-left: 0.3em;">
+      <h1 class="text-primary">PRODUCTOS</h1>
+      <!-- Button trigger modal Carrito-->
+      <br>
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="MostrarContenidoCarrito()">
+        Ver Carrito
+      </button>
+      <br>
+      <br>
+      <!-- Modal Carrito-->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Carrito</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div id="lblCarritoVacio">
+                <!-- AQUI PONGAN EL MENSAJE QUE QUIERAN MOSTRAR -->
+                      Carrito Vacio
+              </div>
+
+              <div id="mostrarProductosCarrito">
+
+
+                <table id="tablaCarrito" class="table table-striped table-hover ocultar">
+                  <thead>
+                    <tr class="fila-producto">
+                      <th>Nombre</th>
+                      <th>Precio</th>
+                      <th>Imagen</th>
+                      <th>Quitar</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tabla-tbody-carrito"></tbody>
+                </table>
+                <div id="divMetodoPago" class="input-group mb-3 ocultar">
+                  <span class="input-group-text" id="basic-addon1">Seleccionar Metodo de Pago</span>
+                  <select id="inputMetodoPago" class="form-select" aria-label="Default select example">
+                    <option value="Credito">Credito</option>
+                    <option value="Debito">Debito</option>
+                  </select>
+                  <h5 style="float: right; margin: 10px;">Total: <span id="totalCarrito"></span></h5>
+                </div>
+
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button style="margin-right: 50%;" type="button" class="btn btn-outline-primary" onclick="VaciarCarrito()">Vaciar Carrito</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button id="btnRealizarVenta" type="button" class="btn btn-primary" disabled onclick="RealizarVenta()">Realizar Compra</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <table class="table table-striped table-hover" id="tabla-producto">
+        <thead>
+          <tr class="fila-producto">
+            <th>Descripción</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Imagen</th>
+            <th>Añadir al Carrito</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+      <br>           
+      <br>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+<br>
+<footer class="bg-primary text-light">
+    <div class="container">
+      <br>
+        <div class="row">
+        <div class="col-md-4">
+            <h4>DermaSkin</h4>
+            <ul class="list-unstyled">
+            <li><a href="/" class="text-light">Inicio</a></li>
+            <li><a href="/nosotros.html" class="text-light">Sobre nosotros</a></li>
+            <li><a href="/contacto.html" class="text-light">Contacto</a></li>
+            </ul>
+        </div>
+        <div class="col-md-4">
+            <h4>Síguenos</h4>
+            <ul class="list-unstyled">
+            <li><a href="#" class="text-light">Facebook</a></li>
+            <li><a href="#" class="text-light" >Twitter</a></li>
+            <li><a href="#" class="text-light">Instagram</a></li>
+            </ul>
+        </div>
+        <div class="col-md-4">
+            <h4>Datos de contacto</h4>
+            <p><i class="fa fa-map-marker"></i> 123 Mazatlán, Sinalo</p>
+            <p><i class="fa fa-phone"></i> (123) 456-7890</p>
+            <p><i class="fa fa-envelope"></i> dermaskin@gmail.com</p>
+        </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<!-- SCRIPT PARA CONTROL DE USUARIOS -->
+<script>
+  //OBTENER USUARIO DEL CACHE DEL NAVEGADOR
+  const usuario = JSON.parse(localStorage.getItem("usuario"));
+  
+  
+  const SinUsuario = document.getElementById('SinUsuario')
+  const ConUsuario = document.getElementById('ConUsuario')
+  const mostrarNombreUsuario = document.getElementById('mostrarNombreUsuario')
+
+  let idVentas = "";
+  
+  document.addEventListener("DOMContentLoaded", function () {
+    if (usuario == null) {
+      console.log("Sin Usuario");
+    } else {
+      console.log(`Usuario: ${usuario.ID}`);
+      SinUsuario.classList.add("ocultar");
+      ConUsuario.classList.remove("ocultar");
+      mostrarNombreUsuario.innerHTML = "";
+      console.log(usuario.Nombre);
+      mostrarNombreUsuario.innerHTML = usuario.Nombre;
+    }
+
+    axios
+    .get(`/buscarIDVentas`)
+    .then(function (response) {
+      idVentas = response.data; // Utilizar el operador + para convertir a número
+      idVentas = idVentas[0].ultimoIDVenta + 1;
+      console.log(`IdVentas: ${idVentas}`);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  });
+  
+
+  let cerrarSesión = () => {
+    // Limpiar el usuario del localStorage
+    let nombre = usuario.Nombre;
+    localStorage.removeItem("usuario");
+  
+    // Verificar si el usuario ha sido eliminado
+    if (!localStorage.getItem("usuario")) {
+  
+      alert(`Se cerro sesión con exito`);
+      location.reload();
+    } else {
+      alert("Sucedio un error al cerrar sesión");
+      location.reload();
+    }
+  };
+</script>
+
+<!-- SCRIPT PARA MOSTRAR LOS PRODUCTOS -->
+<script>
+  $(document).ready(function() {
+
+// Función para cargar la tabla de alumnos
+function cargarTablaProductos() {
+    $.get('/mostrarTodos', function(productos) {
+      var tbody = $('#tabla-producto tbody');
+      tbody.empty();
+      for (var i = 0; i < productos.length; i++) {
+        var producto = productos[i];
+        if(producto.estado == 'Inactivo'){
+          continue;
+        } else {
+        var tr = $('<tr>').addClass('fila-producto').appendTo(tbody);
+        $('<td>').text(producto.descripcion).appendTo(tr);
+        $('<td>').text(producto.nombre).appendTo(tr);
+        $('<td>').text(producto.precio).appendTo(tr);
+        // Crear elemento img y agregarlo al td
+        var img = $('<img>').css('height', '150px').attr('src', producto.imagen).attr('alt', '');
+        $('<td>').append(img).appendTo(tr);
+        $('<td>').html(`<button class="btn btn-outline-primary" value="${producto.id}" onclick="AggProducto(this)"> + </button>`).appendTo(tr); // CUANDO MODIFIQUEN ESTE BOTON NO LE QUITEN EL VALUE NI LA FUNCION
+          
+        }
+
+
+
+      }
+    });
+  }
+
+cargarTablaProductos();
+
+});
+</script>
+
+<!-- SCRIPT PARA EL CARRITO  -->
+
+<script>
+const lblCarritoVacio = document.getElementById('lblCarritoVacio')
+const tablaCarrito = document.getElementById('tablaCarrito')
+let totalCarrito = document.getElementById('totalCarrito');
+
+const inputMetodoPago = document.getElementById("inputMetodoPago");
+const divMetodoPago = document.getElementById("divMetodoPago");
+
+
+const btnRealizarVenta = document.getElementById('btnRealizarVenta');
+  
+// CLASE CARRITO CON SUS METODOS
+class Carrito {
+  constructor() {
+    this.productos = []; // Array para almacenar los productos en el carrito
+    this.total = 0; // Variable para almacenar el total de la compra
+  //  this.idVenta = idVentas;
+  }
+
+  // Método para agregar un producto al carrito
+  agregarProducto(producto) {
+    // Verificar si el producto ya existe en el carrito
+    const productoExistente = this.productos.find((p) => p.id == producto.id);
+    if (productoExistente) {
+      alert('El producto ya existe en el carrito')
+      return; // No agregar el producto al carrito si ya existe
+    }
+
+    alert('Producto añadido al carrito')
+
+    // Actualizar la lista de productos en el carrito
+    this.productos.push(producto);
+    this.total += producto.precio;
+
+    var tbody = $('#tabla-tbody-carrito');
+
+        var tr = $(`<tr class="td-${producto.id}">`).addClass('fila-producto').appendTo(tbody);
+        $('<td>').text(producto.nombre).appendTo(tr);
+        $('<td>').text(producto.precio).appendTo(tr);
+        // Crear elemento img y agregarlo al td
+        var img = $('<img>').css('height', '150px').attr('src', producto.imagen).attr('alt', '');
+        $('<td>').append(img).appendTo(tr);
+        $('<td>').html(`<button type="button" class="btn btn-outline-danger" value="${producto.id}" onclick="EliminarProducto(this)"><i class="bi bi-x-lg"></i></button>`).appendTo(tr); 
+
+
+
+    // Actualizar el total en el carrito
+     totalCarrito.innerHTML = `$${this.total}`;
+  }
+
+  // Método para eliminar un producto del carrito
+  eliminarProducto(idProducto) {
+    let index = -1; // Inicializar el índice en -1
+
+    // Utilizar el método findIndex() para encontrar el índice del producto a eliminar
+    index = this.productos.findIndex((producto) => producto.id == idProducto);
+
+    if (index !== -1) {
+      // Si se encontró el producto
+
+      // Restar el precio del producto del total
+      this.total -= this.productos[index].precio;
+
+      // Eliminar el producto del arreglo usando el método splice()
+      this.productos.splice(index, 1);
+
+      // Actualizar el elemento HTML que muestra el total del carrito
+       totalCarrito.innerHTML = `$${this.total}`;
+
+      // Limpiar la consola y mostrar el contenido actualizado del carrito
+      this.mostrarContenido();
+    }
+  }
+
+  // Método para vaciar el carrito
+  vaciarCarrito() {
+    // Vaciar la lista de productos y resetear el total a 0
+    this.productos = [];
+    this.total = 0;
+
+    // Mostrar el mensaje de carrito vacío y ocultar la tabla de productos en el carrito
+    lblCarritoVacio.classList.remove("ocultar");
+    tablaCarrito.classList.add("ocultar");
+    divMetodoPago.classList.add("ocultar");
+    btnRealizarVenta.disabled = true;
+
+    // Vaciar el contenido del contenedor de productos en el carrito en el DOM
+    document.getElementById("tabla-tbody-carrito").innerHTML = "";
+    this.mostrarContenido();
+  }
+
+  // Método para mostrar el contenido del carrito en la consola
+  mostrarContenido() {
+    console.clear();
+    console.log("Contenido del carrito:");
+    console.log("-----------------------");
+
+    // Iterar sobre la lista de productos en el carrito e imprimir sus detalles
+    this.productos.forEach((producto) => {
+      console.log(
+        `ID: ${producto.id}, Producto: ${producto.nombre}, Precio: $${producto.precio}`
+      );
+    });
+
+    console.log("-----------------------");
+    console.log(`Total: $${this.total}`);
+    console.log("-----------------------");
+  }
+
+  // Método para realizar la venta
+  async realizarVenta(metodoPago) {
+    
+    try {
+      // Realizar una solicitud POST a la URL de base con los productos en el cuerpo de la solicitud
+      const response = await axios.post(`/realizarVenta`, {
+        usuarioId: usuario.ID,
+        productos: this.productos,
+        idVenta: idVentas,
+        metodoPago: metodoPago,
+      });
+
+      // Procesar la respuesta
+      alert(`${response.data}`);
+      location.reload();
+    } catch (error) {
+      console.error("Error al realizar la compra:", error); // Cambiado de alert() a console.error()
+    }
+  }
+}
+
+// CREACION DE LA INSTANCIA CARRITO
+const miCarrito = new Carrito();
+
+let MostrarContenidoCarrito = () => {
+  miCarrito.mostrarContenido();
+};
+
+let AggProducto = async (boton) => {
+  if (usuario == null) {
+    alert(
+      "Para agregar productos al carrito, inicia sesión."
+    );
+
+    window.location.href = "/login";
+
+  } else {
+    tablaCarrito.classList.remove("ocultar");
+    divMetodoPago.classList.remove("ocultar");
+
+    lblCarritoVacio.classList.add("ocultar");
+    btnRealizarVenta.disabled = false;
+
+    let ID = parseInt(boton.value);
+
+    try {
+      // Realizar una solicitud GET para buscar un producto por ID
+      const response = await axios.get(`/buscarProductoPorId`, {
+        params: { ID: ID }, // Enviar el ID como parámetro en la URL
+      });
+      var infoProducto = response.data;
+
+      const producto = {
+        id: infoProducto[0].id,
+        nombre: infoProducto[0].nombre,
+        precio: infoProducto[0].precio,
+        imagen: infoProducto[0].imagen,
+      };
+
+      // Agregar producto al carrito
+      miCarrito.agregarProducto(producto);
+    } catch (error) {
+      console.error("Error al buscar el producto:", error); // Mostrar un mensaje de error en caso de fallo
+    }
+  }
+};
+
+let EliminarProducto = (boton) => {
+  let idProducto = boton.value;
+
+  // Obtener el elemento que se desea eliminar
+  var elementoEliminar = document.querySelector(`.td-${idProducto}`);
+
+  // Eliminar el elemento usando el método remove()
+  elementoEliminar.remove();
+
+  // Eliminar el producto del carrito
+  miCarrito.eliminarProducto(idProducto);
+
+  // Obtener una referencia al elemento tbody
+  let tbodyElement = document.getElementById("tabla-tbody-carrito");
+
+  // Verificar si el tbody está vacío
+  if (tbodyElement.childElementCount === 0) {
+    lblCarritoVacio.classList.remove("ocultar");
+    tablaCarrito.classList.add("ocultar");
+    divMetodoPago.classList.add("ocultar");
+    btnRealizarVenta.disabled = true;
+  }
+};
+
+let VaciarCarrito = () => {
+  miCarrito.vaciarCarrito();
+};
+
+let RealizarVenta = () => {
+  const metodoDePago = inputMetodoPago.value;
+
+  miCarrito.realizarVenta(metodoDePago);
+};
+</script>
+</body>
+
+
+</html>
