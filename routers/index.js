@@ -40,6 +40,7 @@ router.get("/login", (req, res) => {
   res.render("login.html");
 });
 
+
 router.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, '../views/admin.html'));
 });
@@ -100,9 +101,10 @@ router.post("/insertar", upload.single("imagen"), function (req, res) {
         <script>
             setTimeout(function() {
               window.close();
-            }, 2500);
+            }, 1000);
           </script>
         </body></html>`);
+
           })
           .catch((error) => {
             res.status(500).send("Error al agregar el producto");
@@ -122,6 +124,11 @@ router.post("/insertar", upload.single("imagen"), function (req, res) {
 
 router.get("/mostrarTodos", async (req, res) => {
   const resultado = await productosBd.mostrarTodos();
+  res.send(resultado);
+});
+
+router.get("/mostrarVentas", async (req, res) => {
+  const resultado = await productosBd.mostrarVentas();
   res.send(resultado);
 });
 

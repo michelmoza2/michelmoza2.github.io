@@ -42,6 +42,20 @@ productosBd.mostrarTodos = function mostrarTodos() {
   });
 };
 
+productosBd.mostrarVentas = function mostrarVentas() {
+  return new Promise((resolve, reject) => {
+    var sqlConsulta = "select * from detalleventa";
+    conexion.query(sqlConsulta, null, function (err, res) {
+      if (err) {
+        console.log("Surgió un error " + err.message);
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    });
+  });
+};
+
 //buscar alumno por matricula
 productosBd.buscarId = function buscarId(id){
 return new Promise((resolve,reject)=>{
