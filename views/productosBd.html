@@ -9,6 +9,9 @@
 </head>
 <body>
 	<div class="container">
+    <br>
+    <center><h1>Panel de Administrador</h1></center>
+    <br>
 		<table class="table table-striped table-hover" id="tabla-producto">
 			<thead>
 				<tr class="fila-producto">
@@ -24,19 +27,19 @@
 			</tbody>
 		</table>
 		<br>
-		<form class="form-inline" id="formulario-producto">
+		<form action="/insertar" method="post"  class="form-inline" id="formulario-producto" enctype="multipart/form-data" target="_blank">
             <div class="form-group row">
                 <div class="col-sm-2">
-                    <input type="text" id="id" name="id" placeholder="id" class="form-control rounded-0">
+                    <input type="text" id="id" name="id" placeholder="Id" class="form-control rounded-0">
                 </div>
                 <div class="col-sm-2">
-                    <input type="text" id="descripcion" name="descripcion" placeholder="descripcion" class="form-control rounded-0">
+                    <input type="text" id="descripcion" name="descripcion" placeholder="Descripción" class="form-control rounded-0" required="true">
                 </div>
                 <div class="col-sm-2">
-                    <input type="text" id="nombre" name="nombre" placeholder="nombre" class="form-control rounded-0">
+                    <input type="text" id="nombre" name="nombre" placeholder="Nombre" class="form-control rounded-0" required="true">
                 </div>
                 <div class="col-sm-2">
-                    <input type="text" id="precio" name="precio" placeholder="precio" class="form-control rounded-0">
+                    <input type="text" id="precio" name="precio" placeholder="Precio" class="form-control rounded-0" required="true">
                 </div>
                 <div class="col-sm-2">
                     <select id="estado" name="estado" class="form-control">
@@ -45,21 +48,23 @@
                     </select>
                 </div>
                 <div class="col-sm-2">
-                    <input type="text" id="imagen" name="imagen" placeholder="imagen" class="form-control rounded-0">
+                    <span>Imagen:</span>
+                    <input id="imagen" type="file" name="imagen" class="form-control rounded-0" accept="image/*" required="true">
                 </div>
             </div>
-        </form>             
+          
 		<br>
-        <button type="submit" class="btn btn-primary " id="buscar">Buscar</button>
-		<button type="button" class="btn btn-success" id="agregar" >Agregar</button>
+    <button type="button" class="btn btn-primary " id="buscar">Buscar</button>
+		<button type="submit" class="btn btn-success" id="agregar" >Agregar</button>
 		<button type="button" class="btn btn-danger" id="borrar">Borrar</button>
 		<button type="button" class="btn btn-warning" id="modificar" >Modificar</button>
+  </form>   
 	</div>
 </body>
 <script>
     $(document).ready(function() {
 
-// Función para cargar la tabla de alumnos
+
 function cargarTablaProductos() {
   $.get('/mostrarTodos', function(productos) {
     var tbody = $('#tabla-producto tbody');
@@ -72,15 +77,16 @@ function cargarTablaProductos() {
         $('<td>').text(producto.nombre).appendTo(tr);
         $('<td>').text(producto.precio).appendTo(tr);
         $('<td>').text(producto.estado).appendTo(tr);
-        $('<td>').text(producto.imagen).appendTo(tr);
-    }
+        // Crear elemento img y agregarlo al td
+        var img = $('<img>').css('height', '100px').attr('src', producto.imagen).attr('alt', '');
+        $('<td>').append(img).appendTo(tr);    }
   });
 }
 
-// Carga la tabla de alumnos al cargar la página
+
 cargarTablaProductos();
 
-// Función para buscar un alumno
+
 $('#buscar').click(function() {
   var id = $('#id').val();
   $.get(`/buscarId/${id}`, function(producto) {
@@ -88,31 +94,14 @@ $('#buscar').click(function() {
     $('#nombre').val(producto.nombre);
     $('#precio').val(producto.precio);
     $('#estado').val(producto.estado);
+    console.log(producto.estado);
     $('#imagen').val(producto.imagen);
   }).fail(function(error) {
     alert('Error al buscar');
   });
 });
 
-// Función para agregar un alumno
-$('#agregar').click(function() {
-  var producto = {
-    id: $('#id').val(),
-    descripcion: $('#descripcion').val(),
-    nombre: $('#nombre').val(),
-    precio: $('#precio').val(),
-    estado: $('#estado').val(),
-    imagen: $('#imagen').val(),
-  };
-  $.post('/insertar', producto, function() {
-    cargarTablaProductos();
-    alert('producto agregado correctamente');
-  }).fail(function(error) {
-    alert('Error al insertar producto');
-  });
-});
 
-// Función para borrar un alumno
 $('#borrar').click(function() {
   var id = $('#id').val();
   $.ajax({
@@ -128,7 +117,7 @@ $('#borrar').click(function() {
   });
 });
 
-// Función para modificar un alumno
+
 $('#modificar').click(function() {
   var id = $('#id').val();
   var producto= {
@@ -136,7 +125,6 @@ $('#modificar').click(function() {
     nombre: $('#nombre').val(),
     precio: $('#precio').val(),
     estado: $('#estado').val(),
-    imagen: $('#imagen').val(),
   };
   $.ajax({
     url: `/actualizar/${id}`,

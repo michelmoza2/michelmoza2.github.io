@@ -23,5 +23,3 @@ sqlConnection.connect(function (err){
 
 
 module.exports = sqlConnection;
-
-module.exports = sqlConnection;
