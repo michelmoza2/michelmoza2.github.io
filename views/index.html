@@ -63,10 +63,10 @@
     </p>
     <div class="contenedor">
       <div class="caja">
-          <img class="img-fluid" style="max-width: 70%;" src="./img/Cerave-001.jpg">
+          <img class="img-fluid" style="max-width: 70%;" src="./img/Cerave-001.jpg" >
           <br>
           <p>Cerave Limpiador espumoso para piel mixta y grasa</p>
-          <button type="button" class="btn btn-primary">¡Cómpralo aqui!</button>
+          <button type="button" class="btn btn-primary" id="comprar">¡Cómpralo aqui!</button>
       </div>
     </div>
     <br>
@@ -103,4 +103,10 @@
   </div>
   </footer>
 </body>
+<script>
+  const comprarBtn = document.getElementById('comprar');
+  comprarBtn.addEventListener('click', () => {
+    window.location.href = 'productos.html';
+  });
+</script>
 </html>
